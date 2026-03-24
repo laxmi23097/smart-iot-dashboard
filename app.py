@@ -1,9 +1,6 @@
-from flask import Flask, render_template, request
-import requests
+from flask import Flask, render_template
 
 app = Flask(__name__)
-
-ESP_IP = "http://YOUR_ESP_IP"   # replace with your ESP IP
 
 @app.route('/')
 def home():
@@ -11,18 +8,20 @@ def home():
 
 @app.route('/on')
 def on():
-    requests.get(ESP_IP + "/on")
+    print("ON clicked")
     return "ON"
 
 @app.route('/off')
 def off():
-    requests.get(ESP_IP + "/off")
+    print("OFF clicked")
     return "OFF"
 
 @app.route('/toggle')
 def toggle():
-    requests.get(ESP_IP + "/toggle_mode")
+    print("MODE changed")
     return "TOGGLED"
 
+import os
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
