@@ -33,6 +33,3 @@ It allows users to control lights and monitor sensor data like LDR (light sensor
 Smart dashboard with buttons and sensor values display
 
 ---
-
-## 📌 Author
-Your Name
