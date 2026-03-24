@@ -1,27 +1,36 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
 
+# Dummy sensor data
+data = {
+    "pir": 0,
+    "ldr": 43290,
+    "led1": "ON",
+    "led2": "ON",
+    "mode": "MANUAL"
+}
+
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("index.html", data=data)
 
 @app.route('/on')
 def on():
-    print("ON clicked")
-    return "ON"
+    data["led1"] = "ON"
+    data["led2"] = "ON"
+    return jsonify(data)
 
 @app.route('/off')
 def off():
-    print("OFF clicked")
-    return "OFF"
+    data["led1"] = "OFF"
+    data["led2"] = "OFF"
+    return jsonify(data)
 
-@app.route('/toggle')
-def toggle():
-    print("MODE changed")
-    return "TOGGLED"
+@app.route('/mode')
+def mode():
+    data["mode"] = "AUTO" if data["mode"] == "MANUAL" else "MANUAL"
+    return jsonify(data)
 
-import os
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
