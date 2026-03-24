@@ -2,21 +2,67 @@
 <html>
 <head>
     <title>Smart Dashboard</title>
-</head>
-
-<body style="text-align:center; font-family:Arial;">
-
-    <h1>SMART CONTROL</h1>
-
-    <button onclick="send('on')">ON</button>
-    <button onclick="send('off')">OFF</button>
-    <button onclick="send('toggle')">AUTO/MANUAL</button>
-
-    <script>
-        function send(action){
-            fetch('/' + action)
+    <style>
+        body {
+            background: #0f172a;
+            font-family: Arial;
+            color: white;
+            text-align: center;
         }
-    </script>
+
+        .card {
+            background: #1e293b;
+            margin: 20px auto;
+            padding: 20px;
+            width: 300px;
+            border-radius: 12px;
+        }
+
+        h1 {
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .blue { background: #3b82f6; }
+        .green { background: #22c55e; }
+        .red { background: #ef4444; }
+    </style>
+</head>
+<body>
+
+<h1>SMART CONTROL</h1>
+
+<div class="card">
+    <h3>Mode: {{data.mode}}</h3>
+</div>
+
+<div class="card">
+    <h3>SENSORS</h3>
+    <p>PIR: {{data.pir}}</p>
+    <p>LDR: {{data.ldr}}</p>
+</div>
+
+<div class="card">
+    <h3>LIGHT STATUS</h3>
+    <p>LED1: {{data.led1}}</p>
+    <p>LED2: {{data.led2}}</p>
+</div>
+
+<div class="card">
+    <button class="blue" onclick="fetch('/mode').then(()=>location.reload())">AUTO</button>
+    <button class="blue" onclick="fetch('/mode').then(()=>location.reload())">MANUAL</button>
+    <br>
+    <button class="green" onclick="fetch('/on').then(()=>location.reload())">ON</button>
+    <button class="red" onclick="fetch('/off').then(()=>location.reload())">OFF</button>
+</div>
 
 </body>
 </html>
